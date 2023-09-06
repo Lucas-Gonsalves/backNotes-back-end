@@ -14,4 +14,4 @@ async function connectionDatabase() {
 };
 
 
-module.exports = connectionDatabase
+module.exports = connectionDatabase;
