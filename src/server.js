@@ -20,8 +20,8 @@ app.use((error, request, response, next) => {
       .json({
         status: "Error.",
         message: error.message
-      })
-  }
+      });
+  };
 
   console.log(error);
 
@@ -30,8 +30,8 @@ app.use((error, request, response, next) => {
     .json({
       status: "Error.",
       message: "Internal-Server-Error."
-    })
-})
+    });
+});
 
 
 const PORT = 3333;

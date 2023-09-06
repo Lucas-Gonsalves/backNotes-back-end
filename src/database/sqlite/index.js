@@ -10,7 +10,7 @@ async function connectionDatabase() {
     driver: sqlite3.Database
   });
 
-  return database
+  return database;
 };
 
 
