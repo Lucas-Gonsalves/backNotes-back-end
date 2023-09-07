@@ -31,7 +31,7 @@ class UserController {
     };
 
 
-    const securePassword = hash(password, 8);
+    const securePassword = await hash(password, 8);
 
 
     const newUser = {
@@ -50,7 +50,6 @@ class UserController {
     });
   };
 
-  
 };
 
 
