@@ -1,19 +1,18 @@
 const { verify } = require("jsonwebtoken");
 const AppError = require("../utils/AppError");
 const authConfig = require("../config/auth");
-const { request } = require("express");
 
 
-function ensureAuthenticated() {
+function ensureAuthenticated(request, response, next) {
   const authHeader = request.headers.authorization;
 
   
   if(!authHeader) {
-    throw new AppError("Token de identificação inválido", 401);
+    throw new AppError("Token de identificação inválido.1", 401);
   }
 
 
-  const [ , token ] = authHeader.split(" ");
+  const [, token] = authHeader.split(" ");
 
 
   try {
@@ -23,10 +22,10 @@ function ensureAuthenticated() {
       id: Number(user_id)
     };
 
-    return next;
+    return next();
   
   } catch {
-    throw new AppError("Token de identificação inválido.", 401);
+    throw new AppError("Token de identificação inválido.2", 401);
   };
 };
 

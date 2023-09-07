@@ -45,6 +45,7 @@ class SessionController {
       subject: String(user.id),
       expiresIn
     });
+    
 
     return response.status(200).json({
       status: "Ok.",
