@@ -5,6 +5,7 @@ const { hash, compare } = require("bcryptjs")
 
 class UserController { 
 
+
   async create(request, response) {
 
     const { name, email, password } = request.body;
@@ -128,6 +129,73 @@ class UserController {
     return response.status(200).json({
       status: "Ok.",
       message: "Usuário atualizado com sucesso.",
+    });
+  };
+
+
+  async delete(request, response) {
+
+    const { old_password } = request.body;
+    const user_id = request.user.id;
+
+
+    if(!old_password) {
+      throw new AppError("É necessário a senha de usuário para a exclusão de conta.");
+    };
+
+
+    const user = await knex("users")
+      .where({ id: user_id })
+      .first();
+    
+
+    if(!user) {
+      throw new AppError("Usuário não encontrado.");
+    };
+
+    
+    const verifyPassword = await compare(old_password, user.password);
+
+
+    if(!verifyPassword) {
+      throw new AppError("Senha incorreta.");
+    };
+
+
+    if(verifyPassword && user.id === user_id) {
+      await knex("users")
+        .where({ id: user.id })
+        .delete();
+    };
+
+
+    return response.status(200).json({
+      status: "Ok.",
+      message: "Usuário excluído com sucesso."
+    });
+  };
+
+
+  async index(request, response) {
+
+    const user_id = request.user.id;
+
+
+    const user = await knex("users")
+      .select("name", "email", "avatar")
+      .where({ id : user_id })
+      .first();
+
+
+    if(!user) {
+      throw new AppError("Usuário não encontrado.");
+    };
+
+
+    return response.status(200).json({
+      status: "Ok.",
+      message: "Usuário pego corretamente do banco de dados.",
+      user
     });
   };
 };
