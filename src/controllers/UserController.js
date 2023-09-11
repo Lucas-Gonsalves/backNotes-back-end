@@ -1,6 +1,6 @@
-const AppError = require("../utils/AppError")
-const knex = require("../database/knex")
-const { hash, compare } = require("bcryptjs")
+const AppError = require("../utils/AppError");
+const knex = require("../database/knex");
+const { hash, compare } = require("bcryptjs");
 
 
 class UserController { 
@@ -201,4 +201,4 @@ class UserController {
 };
 
 
-module.exports = UserController 
+module.exports = UserController;

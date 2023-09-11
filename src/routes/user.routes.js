@@ -8,6 +8,7 @@ const userRoutes = Router();
 const userController = new UserController();
 
 userRoutes.post("/", userController.create);
+
 userRoutes.put("/", ensureAuthenticated, userController.update)
 userRoutes.delete("/", ensureAuthenticated, userController.delete)
 userRoutes.get("/", ensureAuthenticated, userController.index)

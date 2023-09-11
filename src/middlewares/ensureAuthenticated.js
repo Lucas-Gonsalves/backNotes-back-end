@@ -9,7 +9,7 @@ function ensureAuthenticated(request, response, next) {
   
   if(!authHeader) {
     throw new AppError("Token de identificação inválido.1", 401);
-  }
+  };
 
 
   const [, token] = authHeader.split(" ");
