@@ -4,12 +4,9 @@ const NotesController = require("../controllers/NotesController");
 
 
 const notesRoutes = Router();
-
 const notesController = new NotesController();
 
-
 notesRoutes.use(ensureAuthenticated);
-
 
 notesRoutes.post("/", notesController.create);
 notesRoutes.put("/", notesController.update);
