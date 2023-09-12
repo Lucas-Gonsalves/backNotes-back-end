@@ -6,8 +6,11 @@ const connectionDatabase = require("./database/sqlite");
 const AppError= require("./utils/AppError")
 const uploadsConfig = require("./config/upload")
 
+const cors = require("cors")
+
 
 const app = express();
+app.use(cors())
 app.use(express.json());
 
 app.use(routes);
