@@ -4,6 +4,7 @@ const express = require("express");
 const routes = require("./routes");
 const connectionDatabase = require("./database/sqlite");
 const AppError= require("./utils/AppError")
+const uploadsConfig = require("./config/upload")
 
 
 const app = express();
@@ -32,6 +33,8 @@ app.use((error, request, response, next) => {
       message: "Internal-Server-Error."
     });
 });
+
+app.use("/files", express.static(uploadsConfig.UPLOADS_FOLDER))
 
 
 const PORT = 3333;
