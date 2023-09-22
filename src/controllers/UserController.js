@@ -73,16 +73,19 @@ class UserController {
     };
 
 
-    if(password && password.length < 4) {
-      throw new AppError("Senha muito fraca.");
-    };
-
-
     user.name = name ?? user.name;
 
 
-    if(email || password) {
+    if(email !== user.email || password) {
+
+
+      if(!old_password) {
+        throw new AppError("É necessário a senha atual para alteração de Email/Senha.");
+      };
+
+
       const verifyPassword = await compare(old_password, user.password);
+
 
       if(!verifyPassword) {
         throw new AppError("Senha incorreta.");
@@ -90,7 +93,7 @@ class UserController {
     };
 
 
-    if(email && email !== user.email) {
+    if(email !== user.email) {
 
       const checkEmailExists = await knex("users")
         .select("email")
@@ -108,8 +111,13 @@ class UserController {
 
 
     if(password) {
-      const securePassword = await hash(password, 8);
+      
+      if(password.length < 4) {
+        throw new AppError("Senha muito fraca.");
+      };
 
+
+      const securePassword = await hash(password, 8);
       user.password = securePassword;
     };
 

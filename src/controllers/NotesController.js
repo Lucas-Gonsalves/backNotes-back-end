@@ -104,17 +104,16 @@ class NotesController {
     const { title, tags, note_id } = request.query;
     const user_id = request.user.id;
 
-    let notes = String();
-
+    let notes = [];
     
-    if(!note_id && !title && !tags.length >=0) {
+    if(!note_id && !title && !tags.length >= 0) {
 
       const searchUSerIdNotes = await knex("notes")
-      .select("title", "description")
+      .select("id", "title", "description")
       .where({ user_id });
 
 
-      notes = searchUSerIdNotes.length > 0 ?  searchUSerIdNotes : "Nenhuma nota cadastrada.";
+      notes = searchUSerIdNotes;
     };
 
 
@@ -124,6 +123,7 @@ class NotesController {
 
 
       const searchNotesTags = await knex("tags").select([
+        "notes.id",
         "notes.title",
         "notes.description"
       ])
@@ -142,7 +142,7 @@ class NotesController {
     if(title && !tags.length > 0) {
 
       const searchNotesTitle = await knex("notes")
-        .select("title", "description")
+        .select("id", "title", "description")
         .where({ user_id })
         .whereLike("title", `%${ title }%`)
         .orderBy("title");
